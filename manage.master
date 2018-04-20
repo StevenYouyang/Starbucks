@@ -1,0 +1,60 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="manage.master.cs" Inherits="manage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table width="100%"cellspacing="0">
+            <tr>
+                <td align="center"style="background-image:url('Images/bjImage2.jpg');font-size:x-large;"  height="55"width="100%">
+                    星巴克管理系统
+                </td>          
+            </tr>
+        </table>
+        <table width="100%" cellspacing="0">
+           <tr>
+               <td>
+                   <asp:AdRotator ID="AdRotator1" runat="server" AdvertisementFile="~/Banner.xml" Target="_blank" Height="100px"/>
+                   </td>
+               <td align="right">
+
+                   <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" Width="600px">
+                       <Items>
+                           <asp:MenuItem Text="星巴克商城首页" Value="星巴克商城首页" NavigateUrl="~/Products.aspx"></asp:MenuItem>
+                           <asp:MenuItem Text="管理系统首页" Value="管理系统首页" NavigateUrl="~/mproducts.aspx"></asp:MenuItem>
+                           <asp:MenuItem Text="订单管理" Value="订单管理" NavigateUrl="~/OrderAccept.aspx"></asp:MenuItem>
+                           <asp:MenuItem Text="销量查看" Value="销量查看"></asp:MenuItem>
+                           <asp:MenuItem Text="商品上传" Value="商品上传" NavigateUrl="~/upload.aspx"></asp:MenuItem>
+                           <asp:MenuItem Text="注销" Value="注销" NavigateUrl="~/Products.aspx"></asp:MenuItem>
+                       </Items>
+                   </asp:Menu>
+
+               </td>
+           </tr>
+        </table>
+        <!--41------------------------------------------------------------------->
+        <table width="100%"cellspacing="0">
+            <tr>
+                <td>
+                    <asp:Label ID="lblmName" runat="server"></asp:Label>
+                </td>
+                <td align="right"></td>
+            </tr>
+        </table>
+        <hr />
+        <!--41------------------------------------------------------------------->
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

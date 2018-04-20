@@ -1,0 +1,64 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">    
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+ 
+                <table width="100%"cellspacing="0">
+            <tr>
+                <td align="center"style="background-image:url('Images/bj3.jpg');font-size:x-large;"
+                    height="120"width="100%">
+                    欢迎光临星巴克网上咖啡厅
+                </td>
+            </tr>
+        </table>
+        <table width="100%"cellspacing="0">
+     <tr>
+         <td>
+             <asp:AdRotator ID="AdRotator1" runat="server" AdvertisementFile="~/Banner.xml" Target="_blank" Height="100px" />
+             <td align="right">
+                 
+                    <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" Width="600px"  >
+                     <Items>
+                         <asp:MenuItem Text="星巴克首页" Value="星巴克首页" NavigateUrl="~/Products.aspx"></asp:MenuItem>
+                         <asp:MenuItem Text="我的托盘" Value="我的托盘" NavigateUrl="~/ShoppingCart.aspx"></asp:MenuItem>
+                         <asp:MenuItem Text="我的订单" Value="我的订单" NavigateUrl="~/Myorder.aspx"></asp:MenuItem>
+                         <asp:MenuItem Text="注册" Value="注册" NavigateUrl="~/Regist.aspx"></asp:MenuItem>
+                         <asp:MenuItem Text="顾客登陆" Value="顾客登陆" NavigateUrl="~/Login.aspx"></asp:MenuItem>
+                         <asp:MenuItem Text="管理员登录" Value="管理员登录" NavigateUrl="~/Mlogin.aspx"></asp:MenuItem>
+                     </Items>
+                 </asp:Menu>
+             </td>
+         </td>
+     </tr>
+ </table>
+        <table width="100%"cellspacing="0">
+            <tr>
+                <td>
+                    <asp:Label ID="lblUserName" runat="server"></asp:Label>
+                </td>
+                <td align="right">
+
+                    <asp:HyperLink ID="lblplan" runat="server" Text="我的周计划"  NavigateUrl="~/week.aspx"></asp:HyperLink>
+
+                </td>
+            </tr>
+        </table>
+        <hr />
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

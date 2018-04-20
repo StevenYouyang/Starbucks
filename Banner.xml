@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Advertisements>
+  <Ad>
+    <ImageUrl>Images/Starbucksnet.jpg</ImageUrl>
+    <NavigateUrl>http://www.starbucks.cn/</NavigateUrl>
+    <AlternateText>星巴克官网</AlternateText>
+  </Ad>
+</Advertisements>
