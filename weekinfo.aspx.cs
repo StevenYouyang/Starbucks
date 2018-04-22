@@ -96,7 +96,7 @@ public partial class weekinfo : System.Web.UI.Page
         //161_______________________________________________________________________________________________________________
         string weekorderID = Guid.NewGuid().ToString();
         SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["StarbucksConnectionString"].ConnectionString);
-        SqlCommand cmd = new SqlCommand("INSERT weekorders(weekorderID,userID,dztel,address,LXR,accept,weekdate,time) VALUES(@orderID,@userID,@dztel,@address,@LXR,'等待接收',@weekdate,@time)", cn);
+        SqlCommand cmd = new SqlCommand("INSERT weekorders(weekorderID,userID,dztel,address,LXR,accept,weekdate,time) VALUES(@orderID,@userID,@dztel,@address,@LXR,'待接单',@weekdate,@time)", cn);
         cmd.Parameters.Add("@orderID", SqlDbType.NVarChar).Value = weekorderID;
         cmd.Parameters.Add("@userID", SqlDbType.NChar).Value = Session["userID"].ToString();
         cmd.Parameters.Add("@dztel", SqlDbType.NChar).Value = txttel.Text.Trim();
