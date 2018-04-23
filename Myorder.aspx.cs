@@ -23,11 +23,11 @@ public partial class Myorder : System.Web.UI.Page
             Label1.Text = "欢迎再次购买`";
         }
         //198-------------------------------------------
-        if (DataList2.Items.Count <= 0)
+        if (DataList2.Items.Count <= 0 && DataList3.Items.Count<=0)
         {
             lblWWC.Text = "";
         }
-        if (DataList1.Items.Count <= 0)
+        if (DataList1.Items.Count <= 0 && DataList4.Items.Count <= 0)
         {
             lblYWC.Text = "";
         }
@@ -171,5 +171,57 @@ public partial class Myorder : System.Web.UI.Page
             }
             //137--------------------------------------------------------------------------
         }
+    }
+
+    protected void DataList3_ItemDataBound(object sender, DataListItemEventArgs e)
+    {
+        //198-----------------------------------------
+        string weekorderID = DataList3.DataKeys[e.Item.ItemIndex].ToString();
+        SqlDataSource dsOrderItems2 = (SqlDataSource)e.Item.FindControl("dsOrderItems2");
+        dsOrderItems2.SelectParameters["weekorderID"].DefaultValue = weekorderID;
+        //198--------------------------------------------
+    }
+
+    protected void DataList3_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if (e.CommandName == "accept")
+        {
+            //137____________________________________________________________________________________
+            if (this.IsValid)
+            {
+                SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["StarbucksConnectionString"].ConnectionString);
+                SqlCommand cmd = new SqlCommand("update weekorders set accept='已完成' where weekorderID=@weekorderID", cn);
+                HyperLink a = e.Item.FindControl("HyperLink1") as HyperLink;
+                cmd.Parameters.Add("@weekorderID", SqlDbType.NChar).Value = a.Text;
+
+                try
+                {
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+
+                    //ClientScript.RegisterStartupScript(this.GetType(), "Key", "<script>alert('确认收货成功！');</script>");
+                    Response.Redirect(Request.Url.ToString());
+
+                }
+                catch
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "Key", "<script>alert('确认失败！');</script>");
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+            //137--------------------------------------------------------------------------
+        }
+    }
+
+    protected void DataList4_ItemDataBound(object sender, DataListItemEventArgs e)
+    {
+        //198-----------------------------------------
+        string weekorderID = DataList4.DataKeys[e.Item.ItemIndex].ToString();
+        SqlDataSource dsOrderItems = (SqlDataSource)e.Item.FindControl("dsOrderItems");
+        dsOrderItems.SelectParameters["weekorderID"].DefaultValue = weekorderID;
+        //198--------------------------------------------
     }
 }

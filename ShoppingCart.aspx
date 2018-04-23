@@ -61,17 +61,7 @@
 
             </td>
         </tr>
-        <tr><td>&nbsp;<asp:Label ID="Label1" runat="server" Text="加入周计划："></asp:Label>
-                        <asp:DropDownList ID="ddlweek" runat="server">
-                            <asp:ListItem>星期一</asp:ListItem>
-                            <asp:ListItem>星期二</asp:ListItem>
-                            <asp:ListItem>星期三</asp:ListItem>
-                            <asp:ListItem>星期四</asp:ListItem>
-                            <asp:ListItem>星期五</asp:ListItem>
-                            <asp:ListItem>星期六</asp:ListItem>
-                            <asp:ListItem>星期日</asp:ListItem>
-                        </asp:DropDownList>
-                        <asp:Button ID="Button1" runat="server" Text="添加" /></td>
+        <tr><td>&nbsp;</td>
            <td align="right" >
                <asp:Label ID="lblnocart" runat="server"></asp:Label>
                <asp:HyperLink ID="hlpay" runat="server" NavigateUrl="~/OrderInfo.aspx">

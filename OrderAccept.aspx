@@ -8,7 +8,7 @@
 
                                      </td></tr>
               <tr><td>
-                  <asp:DataList ID="DataList1" runat="server" DataSourceID="SqlDataSource1" DataKeyField="orderID" OnItemDataBound="DataList1_ItemDataBound" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px" CellPadding="3" CellSpacing="2" GridLines="Both">
+                  <asp:DataList ID="DataList1" runat="server" DataSourceID="SqlDataSource1" DataKeyField="orderID" OnItemDataBound="DataList1_ItemDataBound" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px" CellPadding="3" CellSpacing="2" GridLines="Both" OnItemCommand="DataList1_ItemCommand">
                        <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />
                        <HeaderStyle BackColor="#A55129" Font-Bold="True" ForeColor="White" />
                        <ItemStyle BackColor="#FFF7E7" ForeColor="#8C4510" />
@@ -19,7 +19,7 @@
                     <td>
                         日期：
                      
-                        <asp:Label ID="OrderDateLable" runat="server" Text='<%# Convert.ToDateTime(Eval("orderDate")).ToString("yyyy-MM-dd") %>'></asp:Label>
+                        <asp:Label ID="OrderDateLable" runat="server" Text='<%# Convert.ToDateTime(Eval("orderDate")).ToString("yyyy-MM-dd hh:mm:ss") %>'></asp:Label>
                     </td>
                     <td>
                         订单号码：<asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("orderID","OrderByID.aspx?orderID={0}") %>' Target="_blank" Text='<%# Eval("orderID") %>'></asp:HyperLink>
@@ -66,7 +66,7 @@
                             </SelectParameters>
                         </asp:SqlDataSource>
                         
-            <asp:Button ID="btnAccept" runat="server" Text="接单" CommandName="accept" onClientClick="return confirm('确认收货成功');" />
+            <asp:Button ID="btnAccept" runat="server" Text="接单" CommandName="accept" onClientClick="return confirm('接单成功');" />
                     </td>
                 </tr>
             </table>
@@ -82,7 +82,7 @@
                   <asp:Label ID="Label2" runat="server" Font-Size="Large" ForeColor="#FF9900" Text="待分配订单："></asp:Label>
                   </td></tr>
               <tr><td>
-                  <asp:DataList ID="DataList2" runat="server" DataKeyField="orderID" DataSourceID="SqlDataSource2" OnItemDataBound="DataList2_ItemDataBound" CellPadding="4" ForeColor="#333333">
+                  <asp:DataList ID="DataList2" runat="server" DataKeyField="orderID" DataSourceID="SqlDataSource2" OnItemDataBound="DataList2_ItemDataBound" CellPadding="4" ForeColor="#333333" OnItemCommand="DataList2_ItemCommand" OnDeleteCommand="DataList2_DeleteCommand">
                       <AlternatingItemStyle BackColor="White" />
                       <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
                       <HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
@@ -94,7 +94,7 @@
                     <td>
                         日期：
                      
-                        <asp:Label ID="OrderDateLable" runat="server" Text='<%# Convert.ToDateTime(Eval("orderDate")).ToString("yyyy-MM-dd") %>'></asp:Label>
+                        <asp:Label ID="OrderDateLable" runat="server" Text='<%# Convert.ToDateTime(Eval("orderDate")).ToString("yyyy-MM-dd hh:mm:ss") %>'></asp:Label>
                     </td>
                     <td>
                         订单号码：<asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("orderID","OrderByID.aspx?orderID={0}") %>' Target="_blank" Text='<%# Eval("orderID") %>'></asp:HyperLink>
@@ -139,11 +139,14 @@
                             <SelectParameters>
                                 <asp:Parameter Name="orderID" />
                             </SelectParameters>
-                        </asp:SqlDataSource>
-                        
-            <asp:Button ID="btnAccept" runat="server" Text="配单" CommandName="accept" onClientClick="return confirm('确认收货成功');" />
-                    </td>
-                </tr>
+                        </asp:SqlDataSource> </td></tr>
+                  <tr><td>选择外卖员：<asp:DropDownList ID="ddl1" runat="server" DataSourceID="dsWMY" DataTextField="WMYname" DataValueField="WMYname"  >
+                      </asp:DropDownList>
+                      <asp:SqlDataSource ID="dsWMY" runat="server" ConnectionString="<%$ ConnectionStrings:StarbucksConnectionString2 %>" SelectCommand="SELECT * FROM [WMY]"></asp:SqlDataSource>
+                      </td><td> <asp:Button ID="btnAccept" runat="server" Text="配单" CommandName="accept" onClientClick="return confirm('配单成功');" /></td></tr>      
+           
+                   
+                
             </table>
             <br />
             
@@ -170,7 +173,7 @@
                     <td>
                         日期：
                      
-                        <asp:Label ID="OrderDateLable" runat="server" Text='<%# Convert.ToDateTime(Eval("orderDate")).ToString("yyyy-MM-dd") %>'></asp:Label>
+                        <asp:Label ID="OrderDateLable" runat="server" Text='<%# Convert.ToDateTime(Eval("orderDate")).ToString("yyyy-MM-dd hh:mm:ss") %>'></asp:Label>
                     </td>
                     <td>
                         订单号码：<asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("orderID","OrderByID.aspx?orderID={0}") %>' Target="_blank" Text='<%# Eval("orderID") %>'></asp:HyperLink>
@@ -194,7 +197,7 @@
                 <tr><td>
                     外卖员：
                      
-                    <asp:Label ID="lblwmyname" runat="server" Text='<%# Eval("WMYID") %>'></asp:Label>
+                    <asp:Label ID="lblwmyname" runat="server" Text='<%# Eval("WMYname") %>'></asp:Label>
                     </td><td>外卖员电话：
 
                           
@@ -250,7 +253,7 @@ orderID, userID, LXR, dztel, address, orderDate, accept, (SELECT SUM(price * Amo
                     <td>
                         日期：
                      
-                        <asp:Label ID="OrderDateLable" runat="server" Text='<%# Convert.ToDateTime(Eval("orderDate")).ToString("yyyy-MM-dd") %>'></asp:Label>
+                        <asp:Label ID="OrderDateLable" runat="server" Text='<%# Convert.ToDateTime(Eval("orderDate")).ToString("yyyy-MM-dd hh:mm:ss") %>'></asp:Label>
                     </td>
                     <td>
                         订单号码：<asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("orderID","OrderByID.aspx?orderID={0}") %>' Target="_blank" Text='<%# Eval("orderID") %>'></asp:HyperLink>
@@ -311,10 +314,10 @@ orderID, userID, LXR, dztel, address, orderDate, accept, (SELECT SUM(price * Amo
                   </td></tr>
                               </table> </td>
              
-             <td  width="4%"></td><td width="48%" valign="top"><table width="100%" valign="top"><tr><td valign="top"> 今天是
-              <asp:Label ID="lblday" runat="server" Text="Label" Font-Size="Large" ForeColor="#0066FF"></asp:Label>,以下是今日周计划订单：</td></tr>
+             <td  width="4%"></td><td width="48%" valign="top"><table width="100%" valign="top"><tr><td valign="top"> 今天是<asp:Label ID="lbdate" runat="server" Text="Label" ForeColor="Blue"></asp:Label>,
+&nbsp;<asp:Label ID="lblday" runat="server" Text="Label" Font-Size="Large" ForeColor="#0066FF"></asp:Label>,以下是今日周计划订单：</td></tr>
                  <tr><td>
-                     <asp:DataList ID="DataList3" runat="server" DataSourceID="SqlDataSource5" DataKeyField="weekorderID" OnItemDataBound="DataList3_ItemDataBound" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Horizontal" OnItemCommand="DataList1_ItemCommand">
+                     <asp:DataList ID="DataList3" runat="server" DataSourceID="SqlDataSource5" DataKeyField="weekorderID" OnItemDataBound="DataList3_ItemDataBound" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Horizontal" OnItemCommand="DataList3_ItemCommand" >
                     <AlternatingItemStyle BackColor="#F7F7F7" />
                     <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
                     <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
@@ -375,10 +378,9 @@ orderID, userID, LXR, dztel, address, orderDate, accept, (SELECT SUM(price * Amo
                                     </SelectParameters>
                                 </asp:SqlDataSource>
                                 </td></tr>
-                            <tr><td colspan="2">
-                                &nbsp;</td><td>
+                            <tr><td ></td><td>
 
-                                    <asp:LinkButton ID="lbaccept" runat="server" CommandName="accept" onClientClick="return confirm('删除 成功');">接单</asp:LinkButton>
+                                    <asp:LinkButton ID="lbaccept" runat="server" CommandName="accept" onClientClick="return confirm('接单成功');">接单</asp:LinkButton>
                                 </td></tr>
                         </table>
                         <br />
@@ -386,9 +388,10 @@ orderID, userID, LXR, dztel, address, orderDate, accept, (SELECT SUM(price * Amo
                     </ItemTemplate>
                     <SelectedItemStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
                 </asp:DataList>
-                <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:StarbucksConnectionString2 %>" SelectCommand="SELECT weekorderID, userID, LXR, dztel, address, time, (SELECT SUM(price * Amount) AS Expr1 FROM orderItems WHERE (orderID = weekorders.weekorderID)) AS SumJe FROM weekorders WHERE (weekdate = @weekdate) and accept='待接单' order by time">
+                <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:StarbucksConnectionString2 %>" SelectCommand="SELECT weekorderID, userID, LXR, dztel, address, time, (SELECT SUM(price * Amount) AS Expr1 FROM orderItems WHERE (orderID = weekorders.weekorderID)) AS SumJe FROM weekorders WHERE (weekdate = @weekdate and convert(varchar(8),setdate,111)&lt;=@yesterday) and accept='待接单' order by time">
                     <SelectParameters>
                         <asp:SessionParameter Name="weekdate" SessionField="weekdate" />
+                        <asp:SessionParameter Name="yesterday" SessionField="yesterday" />
                     </SelectParameters>
                 </asp:SqlDataSource>
                      </td></tr>
@@ -396,7 +399,7 @@ orderID, userID, LXR, dztel, address, orderDate, accept, (SELECT SUM(price * Amo
                      <asp:Label ID="Label14" runat="server" Text="待配单：" Font-Size="Large" ForeColor="Red"></asp:Label>
                      </td></tr>
                   <tr><td>
-                  <asp:DataList ID="DataList6" runat="server" DataKeyField="weekorderID" DataSourceID="SqlDataSource6" OnItemDataBound="DataList6_ItemDataBound" CellPadding="4" ForeColor="#333333">
+                  <asp:DataList ID="DataList6" runat="server" DataKeyField="weekorderID" DataSourceID="SqlDataSource6" OnItemDataBound="DataList6_ItemDataBound" CellPadding="4" ForeColor="#333333" OnItemCommand="DataList6_ItemCommand">
                       <AlternatingItemStyle BackColor="White" />
                       <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
                       <HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
@@ -433,7 +436,7 @@ orderID, userID, LXR, dztel, address, orderDate, accept, (SELECT SUM(price * Amo
                 <tr>
                     <td colspan="2">
 
-                        <asp:GridView ID="gvOrderItems" runat="server" AutoGenerateColumns="False" BorderColor="#009933" BorderWidth="1px" DataKeyNames="orderItemID" DataSourceID="dsOrderItems2" >
+                        <asp:GridView ID="gvOrderItems" runat="server" AutoGenerateColumns="False" BorderColor="#009933" BorderWidth="1px" DataKeyNames="orderItemID" DataSourceID="dsweek1" >
                             <Columns>
                                 <asp:BoundField DataField="productname" HeaderText="食品名称" SortExpression="productname" />
                                 <asp:ImageField DataImageUrlField="productImage" HeaderText="图片">
@@ -450,10 +453,12 @@ orderID, userID, LXR, dztel, address, orderDate, accept, (SELECT SUM(price * Amo
                                         <asp:Parameter Name="weekorderID" />
                                     </SelectParameters>
                                 </asp:SqlDataSource>
-                        
-            <asp:Button ID="btnAccept" runat="server" Text="配单" CommandName="accept" onClientClick="return confirm('确认收货成功');" />
                     </td>
                 </tr>
+                <tr><td>选择外卖员：<asp:DropDownList ID="ddl1" runat="server" DataSourceID="dsWMY" DataTextField="WMYname" DataValueField="WMYname"  >
+                      </asp:DropDownList>
+                      <asp:SqlDataSource ID="dsWMY" runat="server" ConnectionString="<%$ ConnectionStrings:StarbucksConnectionString2 %>" SelectCommand="SELECT * FROM [WMY]"></asp:SqlDataSource>
+                      </td><td> <asp:Button ID="btnAccept" runat="server" Text="配单" CommandName="accept" onClientClick="return confirm('配单成功');" /></td></tr>      
             </table>
             <br />
             
@@ -510,7 +515,7 @@ weekorderID, userID, LXR, dztel, address, weekdate,accept, time,(SELECT SUM(pric
                 <tr><td>
                     外卖员：
                      
-                    <asp:Label ID="lblwmyname" runat="server" Text='<%# Eval("WMYID") %>'></asp:Label>
+                    <asp:Label ID="lblwmyname" runat="server" Text='<%# Eval("WMYname") %>'></asp:Label>
                     </td><td>外卖员电话：
 
                           
@@ -520,7 +525,7 @@ weekorderID, userID, LXR, dztel, address, weekdate,accept, time,(SELECT SUM(pric
                 <tr>
                     <td colspan="2">
 
-                        <asp:GridView ID="gvOrderItems" runat="server" AutoGenerateColumns="False" BorderColor="#009933" BorderWidth="1px" DataKeyNames="orderItemID" DataSourceID="dsOrderItems2" >
+                        <asp:GridView ID="gvOrderItems" runat="server" AutoGenerateColumns="False" BorderColor="#009933" BorderWidth="1px" DataKeyNames="orderItemID" DataSourceID="dsweek1" >
                             <Columns>
                                 <asp:BoundField DataField="productname" HeaderText="食品名称" SortExpression="productname" />
                                 <asp:ImageField DataImageUrlField="productImage" HeaderText="图片">
@@ -555,7 +560,7 @@ weekorderID, userID, LXR, dztel, address, weekdate,accept, time,(SELECT SUM(pric
                   </asp:SqlDataSource>
                   </td></tr>
               <tr><td>
-                  <asp:Label ID="Label6" runat="server" Font-Size="Large" ForeColor="Blue" Text="已完成："></asp:Label>
+                  <asp:Label ID="Label6" runat="server" Font-Size="Large" ForeColor="Blue" Text="已完成周计划："></asp:Label>
                   </td></tr>
               <tr><td>
                   <asp:DataList ID="DataList8" runat="server" DataKeyField="weekorderID" DataSourceID="SqlDataSource8" OnItemDataBound="DataList8_ItemDataBound" CellPadding="3" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" GridLines="Horizontal">
@@ -596,11 +601,13 @@ weekorderID, userID, LXR, dztel, address, weekdate,accept, time,(SELECT SUM(pric
                     订单状态：
                      
                     <asp:Label ID="lblAccept" runat="server" Text='<%# Eval("accept") %>'></asp:Label>
+                    </td><td>
+                        <asp:Label ID="Label15" runat="server" Text='<%# Eval("weekdate") %>'></asp:Label>
                     </td></tr>
                 <tr>
                     <td colspan="2">
 
-                        <asp:GridView ID="gvOrderItems" runat="server" AutoGenerateColumns="False" BorderColor="#009933" BorderWidth="1px" DataKeyNames="orderItemID" DataSourceID="dsOrderItems2" >
+                        <asp:GridView ID="gvOrderItems" runat="server" AutoGenerateColumns="False" BorderColor="#009933" BorderWidth="1px" DataKeyNames="orderItemID" DataSourceID="dsweek1" >
                             <Columns>
                                 <asp:BoundField DataField="productname" HeaderText="食品名称" SortExpression="productname" />
                                 <asp:ImageField DataImageUrlField="productImage" HeaderText="图片">
@@ -628,10 +635,7 @@ weekorderID, userID, LXR, dztel, address, weekdate,accept, time,(SELECT SUM(pric
                        <SelectedItemStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
                   </asp:DataList>
                   <asp:SqlDataSource ID="SqlDataSource8" runat="server" ConnectionString="<%$ ConnectionStrings:StarbucksConnectionString2 %>" SelectCommand="SELECT 
-weekorderID, userID, LXR, dztel, address, weekdate,accept, time,(SELECT SUM(price * Amount) AS Expr1 FROM orderItems WHERE (orderID = weekorders.weekorderID)) AS SumJe ,(select WMYname AS Expr1 from WMY where WMYID=weekorders.WMYID) as WMYname,(select WMYtel AS Expr1 from WMY where WMYID=weekorders.WMYID) AS WMYtel FROM weekorders WHERE (accept='已完成' and weekdate=@weekdate) ORDER BY time DESC">
-                      <SelectParameters>
-                          <asp:SessionParameter Name="weekdate" SessionField="weekdate" />
-                      </SelectParameters>
+weekorderID, userID, LXR, dztel, address, weekdate,accept, time,date,(SELECT SUM(price * Amount) AS Expr1 FROM orderItems WHERE (orderID = weekorders.weekorderID)) AS SumJe ,(select WMYname AS Expr1 from WMY where WMYID=weekorders.WMYID) as WMYname,(select WMYtel AS Expr1 from WMY where WMYID=weekorders.WMYID) AS WMYtel FROM weekorders WHERE (accept='已完成') ORDER BY date DESC">
                   </asp:SqlDataSource>
                   </td></tr>
                                                    </table>

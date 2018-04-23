@@ -47,9 +47,7 @@ public partial class ShoppingCart : System.Web.UI.Page
             btnClear.Visible = false;
             btnTemp.Visible = false;
             lblSum.Text = "";
-            Label1.Visible = false;
-            ddlweek.Visible = false;
-            Button1.Visible = false;
+            
         }
 
         else

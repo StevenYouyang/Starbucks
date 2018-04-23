@@ -106,7 +106,7 @@ public partial class OrderInfo : System.Web.UI.Page
         cn.Open();
         da.Fill(ds);
         cn.Close();
-        cmd = new SqlCommand("INSERT orderItems(orderID,productID,Amount,price) VALUES(@orderID,@productID,@Amount,@price)", cn);
+        cmd = new SqlCommand("INSERT orderItems(orderID,productID,Amount,price,ifcomment) VALUES(@orderID,@productID,@Amount,@price,'0')", cn);
         dt = (DataTable)Session["Cart"];
         for(int i=0;i<dt.Rows.Count;i++)
         {
