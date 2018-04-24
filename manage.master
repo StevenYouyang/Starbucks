@@ -31,7 +31,7 @@
                            <asp:MenuItem Text="星巴克商城首页" Value="星巴克商城首页" NavigateUrl="~/Products.aspx"></asp:MenuItem>
                            <asp:MenuItem Text="管理系统首页" Value="管理系统首页" NavigateUrl="~/mproducts.aspx"></asp:MenuItem>
                            <asp:MenuItem Text="订单管理" Value="订单管理" NavigateUrl="~/OrderAccept.aspx"></asp:MenuItem>
-                           <asp:MenuItem Text="销量查看" Value="销量查看"></asp:MenuItem>
+                           <asp:MenuItem Text="销量查看" Value="销量查看" NavigateUrl="~/count.aspx"></asp:MenuItem>
                            <asp:MenuItem Text="商品上传" Value="商品上传" NavigateUrl="~/upload.aspx"></asp:MenuItem>
                            <asp:MenuItem Text="注销" Value="注销" NavigateUrl="~/Products.aspx"></asp:MenuItem>
                        </Items>

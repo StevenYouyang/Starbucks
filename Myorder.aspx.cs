@@ -223,5 +223,26 @@ public partial class Myorder : System.Web.UI.Page
         SqlDataSource dsOrderItems = (SqlDataSource)e.Item.FindControl("dsOrderItems");
         dsOrderItems.SelectParameters["weekorderID"].DefaultValue = weekorderID;
         //198--------------------------------------------
+        SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["StarbucksConnectionString"].ConnectionString);
+        SqlCommand cmd = new SqlCommand("select count(ifcomment) from orderItems where(orderID=@orderID and ifcomment='0')", cn);
+        HyperLink a = e.Item.FindControl("HyperLink1") as HyperLink;
+        cmd.Parameters.Add("@orderID", SqlDbType.NChar).Value = a.Text;
+        DataSet ds = new DataSet();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        cn.Open();
+        da.Fill(ds);
+        cn.Close();
+        string b = ds.Tables[0].Rows[0][0].ToString();
+        string c = "0";
+        if (b.Equals(c))
+        {
+            ((HyperLink)(e.Item.FindControl("HyperLink2"))).Visible = false;
+            ((Label)(e.Item.FindControl("Label2"))).Text = "已完成评价";
+        }
+        else
+        {
+            ((Label)(e.Item.FindControl("Label2"))).Text = "未完成评价";
+        }
+
     }
 }
