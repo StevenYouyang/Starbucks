@@ -15,13 +15,21 @@ public partial class count : System.Web.UI.Page
             date1.Text = DateTime.Today.AddDays(-100).ToString("yyyy-MM-dd");
             date2.Text = DateTime.Today.ToString("yyyy-MM-dd");
         }
-        if (GridView1.Rows.Count==null)
-        {
-            Label1.Text = "";
-        }
-        if (GridView2.Rows.Count == null)
-        {
-            Label2.Text = "";
-        }
+        //if (GridView1.Rows.Count==null)
+        //{
+        //    Label1.Text = "";
+        //}
+        
+    }
+
+    protected void GridView2_DataBound(object sender, EventArgs e)
+    {
+        
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+      
+        GridView2.DataBind();
     }
 }
