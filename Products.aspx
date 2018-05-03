@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+     <div style="background-color:mediumaquamarine">
     
     <asp:LinkButton ID="lbTJ" runat="server" PostBackUrl="~/TJ.aspx">推荐</asp:LinkButton>
     

@@ -19,6 +19,7 @@ public partial class OrderAccept : System.Web.UI.Page
         Session["weekdate"] = week;
         string today = DateTime.Now.Date.ToShortDateString();
         lbdate.Text = today;
+        
         string yesterday = DateTime.Now.AddDays(-1).ToShortDateString();
         Session["yesterday"] = yesterday;
 
@@ -38,18 +39,8 @@ public partial class OrderAccept : System.Web.UI.Page
         {
             Label4.Text = "";
         }
-        if (DataList6.Items.Count <= 0)
-        {
-            Label14.Text = "";
-        }
-        if (DataList7.Items.Count <= 0)
-        {
-            Label5.Text = "";
-        }
-        if (DataList8.Items.Count <= 0)
-        {
-            Label6.Text = "";
-        }
+        
+        
     }
 
     protected void DataList1_ItemDataBound(object sender, DataListItemEventArgs e)
@@ -103,32 +94,9 @@ public partial class OrderAccept : System.Web.UI.Page
         //198--------------------------------------------
     }
 
-    protected void DataList6_ItemDataBound(object sender, DataListItemEventArgs e)
-    {
-        //198-----------------------------------------
-        string weekorderID = DataList6.DataKeys[e.Item.ItemIndex].ToString();
-        SqlDataSource dsweek1 = (SqlDataSource)e.Item.FindControl("dsweek1");
-        dsweek1.SelectParameters["weekorderID"].DefaultValue = weekorderID;
-        //198--------------------------------------------
-    }
-
-    protected void DataList7_ItemDataBound(object sender, DataListItemEventArgs e)
-    {
-        //198-----------------------------------------
-        string weekorderID = DataList7.DataKeys[e.Item.ItemIndex].ToString();
-        SqlDataSource dsweek1 = (SqlDataSource)e.Item.FindControl("dsweek1");
-        dsweek1.SelectParameters["weekorderID"].DefaultValue = weekorderID;
-        //198--------------------------------------------
-    }
-
-    protected void DataList8_ItemDataBound(object sender, DataListItemEventArgs e)
-    {
-        //198-----------------------------------------
-        string weekorderID = DataList8.DataKeys[e.Item.ItemIndex].ToString();
-        SqlDataSource dsweek1 = (SqlDataSource)e.Item.FindControl("dsweek1");
-        dsweek1.SelectParameters["weekorderID"].DefaultValue = weekorderID;
-        //198--------------------------------------------
-    }
+   
+    
+   
 
     protected void DataList1_ItemCommand(object source, DataListCommandEventArgs e)
     {
@@ -171,10 +139,26 @@ public partial class OrderAccept : System.Web.UI.Page
             //137____________________________________________________________________________________
             if (this.IsValid)
             {
+                //161_______________________________________________________________________________________________________________
+                string orderID = Guid.NewGuid().ToString();
                 SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["StarbucksConnectionString"].ConnectionString);
-                SqlCommand cmd = new SqlCommand("update weekorders set accept='待配单' where weekorderID=@weekorderID", cn);
-                Label a = e.Item.FindControl("Label8") as Label;
-                cmd.Parameters.Add("@weekorderID", SqlDbType.NChar).Value = a.Text;
+                SqlCommand cmd = new SqlCommand("INSERT orders(orderID,userID,dztel,address,LXR,accept) VALUES(@orderID,@userID,@dztel,@address,@LXR,'待配单')", cn);
+                Label label8 = e.Item.FindControl("Label8") as Label;
+                Label label9 = e.Item.FindControl("Label9") as Label;
+                Label label10 = e.Item.FindControl("Label10") as Label;
+                Label label11 = e.Item.FindControl("Label11") as Label;
+                Label label16 = e.Item.FindControl("Label16") as Label;
+                cmd.Parameters.Add("@orderID", SqlDbType.NVarChar).Value = orderID;
+                
+                cmd.Parameters.Add("@userID", SqlDbType.NChar).Value = label16.Text.ToString();
+                cmd.Parameters.Add("@dztel", SqlDbType.NChar).Value = label11.Text.Trim();
+                cmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = label9.Text.Trim();
+                cmd.Parameters.Add("@LXR", SqlDbType.NChar).Value = label10.Text.Trim();
+                //DataSet ds = new DataSet();
+                //SqlDataAdapter da = new SqlDataAdapter(cmd);
+                //cn.Open();
+                //da.Fill(ds);
+                //cn.Close();
 
                 try
                 {
@@ -182,7 +166,7 @@ public partial class OrderAccept : System.Web.UI.Page
                     cmd.ExecuteNonQuery();
 
                     //ClientScript.RegisterStartupScript(this.GetType(), "Key", "<script>alert('确认收货成功！');</script>");
-                    Response.Redirect(Request.Url.ToString());
+                    
 
                 }
                 catch
@@ -193,6 +177,28 @@ public partial class OrderAccept : System.Web.UI.Page
                 {
                     cn.Close();
                 }
+                cmd = new SqlCommand("update orderItems set orderID=@orderID where orderID=@a", cn);
+                cmd.Parameters.Add("@orderID", SqlDbType.NVarChar).Value = orderID;
+                cmd.Parameters.Add("@a", SqlDbType.NVarChar).Value = label8.Text;
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+                //cmd = new SqlCommand("update weekorders set date=@date where weekorderID=@b", cn);
+                //cmd.Parameters.Add("@orderID", SqlDbType.NVarChar).Value = lbdate.Text;
+                //cmd.Parameters.Add("@b", SqlDbType.NVarChar).Value = label8.Text;
+
+                //cn.Open();
+                //cmd.ExecuteNonQuery();
+                //cn.Close();
+                cmd = new SqlCommand("update weekorders set weekorderID=@weekorderID,date=getdate() where weekorderID=@c", cn);
+                
+                cmd.Parameters.Add("@weekorderID", SqlDbType.NVarChar).Value = orderID;
+                cmd.Parameters.Add("@c", SqlDbType.NVarChar).Value = label8.Text;
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+                Response.Redirect(Request.Url.ToString());
             }
             //137--------------------------------------------------------------------------
         }

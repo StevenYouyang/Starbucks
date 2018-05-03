@@ -73,9 +73,7 @@ productID,SUM(CAST(amount as int)) as cnt,(select productImage from products whe
 from orderItems 
 where(  convert(varchar(10),( select orderDate from orders where orderID=orderItems.orderID) ,120)&gt;=@date1
 	and convert(varchar(10),(select orderDate from orders where orderID=orderItems.orderID), 120)&lt;=@date2)
-or(
-convert(varchar(10),( select setdate from weekorders where weekorderID=orderItems.orderID) ,120)&gt;=@date1
-	and convert(varchar(10),(select setdate from weekorders where weekorderID=orderItems.orderID), 120)&lt;=@date2)
+
 group by productID,price
 order by cnt desc,cntt desc">
                     <SelectParameters>
@@ -129,9 +127,7 @@ SUM(case when productID=@productID then CAST(amount as int) else 0 end) as cnt,(
 from orderItems 
 where productID=@productID and(  convert(varchar(10),( select orderDate from orders where orderID=orderItems.orderID) ,120)&gt;=@date1
 	and convert(varchar(10),(select orderDate from orders where orderID=orderItems.orderID), 120)&lt;=@date2)
-or(
-convert(varchar(10),( select setdate from weekorders where weekorderID=orderItems.orderID) ,120)&gt;=@date1
-	and convert(varchar(10),(select setdate from weekorders where weekorderID=orderItems.orderID), 120)&lt;=@date2) ">
+">
                             <SelectParameters>
                                 <asp:ControlParameter ControlID="tb1" Name="productID" PropertyName="Text" />
                                 <asp:ControlParameter ControlID="date1" Name="date1" PropertyName="Text" />

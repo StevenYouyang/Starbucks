@@ -26,7 +26,7 @@
     <table align="center">
         <tr>
             <td rowspan="4"style="width:100px">
-                <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/L001.jpg" style="margin-bottom: 0px" />
+                <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/L001.jpg" style="height:200px" />
 
             </td>
             <td class="auto-style3">

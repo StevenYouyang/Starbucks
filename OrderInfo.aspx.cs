@@ -95,7 +95,7 @@ public partial class OrderInfo : System.Web.UI.Page
         //161_______________________________________________________________________________________________________________
         string orderID = Guid.NewGuid().ToString();
         SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["StarbucksConnectionString"].ConnectionString);
-        SqlCommand cmd = new SqlCommand("INSERT orders(orderID,userID,dztel,address,LXR,accept) VALUES(@orderID,@userID,@dztel,@address,@LXR,'待接单')", cn);
+        SqlCommand cmd = new SqlCommand("INSERT orders(orderID,userID,dztel,address,LXR,accept,WMYID) VALUES(@orderID,@userID,@dztel,@address,@LXR,'待接单','00000')", cn);
         cmd.Parameters.Add("@orderID", SqlDbType.NVarChar).Value = orderID;
         cmd.Parameters.Add("@userID", SqlDbType.NChar).Value = Session["userID"].ToString();
         cmd.Parameters.Add("@dztel", SqlDbType.NChar).Value = txttel.Text.Trim();

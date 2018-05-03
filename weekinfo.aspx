@@ -137,7 +137,7 @@
          <tr>
             <td align="right" colspan="2">
 
-                <asp:LinkButton ID="lbOK" runat="server" OnClick="lbOK_Click" onClientClick="return confirm('添加成功，明日起生效！');">加入周计划</asp:LinkButton>
+                <asp:LinkButton ID="lbOK" runat="server" OnClick="lbOK_Click" onClientClick="return confirm('添加成功，24小时后生效！');">加入周计划</asp:LinkButton>
 
             </td>
         </tr>
